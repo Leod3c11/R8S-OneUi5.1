@@ -31,6 +31,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libarchive-tools ccache
 
+      - name: Download Clang Toolchain
+        run: |
+          mkdir -p toolchain/clang/host/linux-x86
+          cd toolchain/clang/host/linux-x86
+          wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/tags/android-10.0.0_r47/clang-r349610.tar.gz -O clang-r349610.tar.gz
+          mkdir clang-r349610-jopp
+          tar -xf clang-r349610.tar.gz -C clang-r349610-jopp
+
       - name: Build Kernel
         run: |
           chmod +x ./build_kernel.sh
@@ -53,4 +61,3 @@ jobs:
         with:
           name: built-kernels
           path: ${{ env.ZIP_FILES }}
-          
